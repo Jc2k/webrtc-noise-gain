@@ -359,6 +359,7 @@ machine_cflags = ["-DWEBRTC_ARCH_LITTLE_ENDIAN"]
 
 have_neon = True
 have_avx2 = False  # disabled for older CPUs
+have_fma = False  # disabled for older CPUs
 
 
 if system == "linux":
@@ -410,7 +411,6 @@ elif machine in ("x86_64", "amd64", "x86", "i386", "i686"):
     machine_cflags += [
         "-DWEBRTC_ARCH_X86_FAMILY",
         "-msse2",
-        "-mfma",
     ]
 
     if have_avx2:
@@ -418,6 +418,11 @@ elif machine in ("x86_64", "amd64", "x86", "i386", "i686"):
         machine_cflags += [
             "-DWEBRTC_ENABLE_AVX2",
             "-mavx2",
+        ]
+
+    if have_fma:
+        machine_cflags += [
+            "-mfma",
         ]
 
     if machine in ("x86_64", "amd64"):
